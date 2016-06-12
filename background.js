@@ -32,8 +32,10 @@ function showError(text) {
  * @returns {string}
  */
 var readable = function (val) {
-  if (Math.abs(val) < 1) {
+  if (Math.abs(val) < 10) {
     return "" + val.toFixed(2);
+  } else if (Math.abs(val) < 100) {
+    return "" + val.toFixed(1);
   } else if (Math.abs(val) < 10000) {
     return "" + Math.round(val);
   } else {
