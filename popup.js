@@ -23,7 +23,8 @@ $(function () {
     $("body").css({
       width: width,
       height: height
-    })
+    });
+    chrome.runtime.sendMessage('fetch');
   } else {
     chrome.runtime.openOptionsPage();
     $("body")

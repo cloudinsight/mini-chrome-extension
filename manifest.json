@@ -10,7 +10,7 @@
     "persistent": false,
     "scripts": [
       "jquery-3.0.0.min.js",
-      "bg.js"
+      "background.js"
     ]
   },
   "permissions": [

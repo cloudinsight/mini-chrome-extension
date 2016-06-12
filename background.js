@@ -92,7 +92,7 @@ setInterval(function () {
 }, updateInterval);
 
 chrome.runtime.onMessage.addListener(function (evt) {
-  if (evt === 'token_updated') {
+  if (evt === 'fetch') {
     loadChart(localStorage["token"]);
   }
 });
