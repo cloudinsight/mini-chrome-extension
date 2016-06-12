@@ -5,13 +5,32 @@
     <title>Options</title>
     <script src="jquery-3.0.0.min.js"></script>
     <script src="options.js"></script>
+    <style>
+        #help {
+            font-size: 0.9em;
+            color: #999999;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+    </style>
 </head>
 <body>
 <form>
     <label>
         Token:
-        <input size="32" placeholder="Token" id="token"/>
+        <input required size="32" placeholder="Token" id="token"/>
     </label>
 </form>
+<div id="help">
+    <br/>
+    <ul>
+        <li> * Token 可以在<a href="http://docs-ci.oneapm.com/share/">分享图表</a>的链接里看到。</li>
+        <li> ** 插件源码 <a href="https://github.com/cloudinsight/mini-chrome-extension">Github</a></li>
+    </ul>
+</div>
 </body>
 </html>

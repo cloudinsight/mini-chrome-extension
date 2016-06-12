@@ -25,6 +25,7 @@ $(function () {
       height: height
     })
   } else {
+    chrome.runtime.openOptionsPage();
     $("body")
       .text(invalidToken)
       .css({

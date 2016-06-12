@@ -2,9 +2,14 @@
 
 在你的 `Chrome` 里显示 Cloudinsight 图表的插件。
 
+## 效果图
+
 ![截图](./docs/screenshot.png)
+
+## 设置页面
+
+![截图](./docs/options.png)
 
 ## 变更历史
 
-- v0.0.1
- - POC
+[changelog.md](./changelog.md)

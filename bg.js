@@ -80,11 +80,19 @@ function loadChart(token) {
     }
   }).catch(function () {
     console.log(arguments)
-    showError("!")
+    showError("!");
   })
 }
+
+showBadge('...');
 
 loadChart(localStorage["token"]);
 setInterval(function () {
   loadChart(localStorage["token"]);
 }, updateInterval);
+
+chrome.runtime.onMessage.addListener(function (evt) {
+  if (evt === 'token_updated') {
+    loadChart(localStorage["token"]);
+  }
+});
