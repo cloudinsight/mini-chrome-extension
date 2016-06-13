@@ -20,16 +20,25 @@
 </head>
 <body>
 <form>
-    <label>
-        Token:
-        <input required size="32" placeholder="Token" id="token"/>
-    </label>
+    <p>
+        <label>
+            刷新间隔：
+            <select disabled>
+                <option>10分钟</option>
+            </select>
+        </label>
+    </p>
+    <p>
+        <label>
+            Token:
+            <input required size="32" placeholder="Token" id="token"/>
+        </label>
+    </p>
 </form>
 <div id="help">
-    <br/>
     <ul>
-        <li> * Token 可以在<a href="http://docs-ci.oneapm.com/share/">分享图表</a>的链接里看到。</li>
-        <li> ** 插件源码 <a href="https://github.com/cloudinsight/mini-chrome-extension">Github</a></li>
+        <li> * Token 可以在 <a href="http://docs-ci.oneapm.com/share/">分享图表</a> 的链接里看到。</li>
+        <li> * 插件源码在 <a href="https://github.com/cloudinsight/mini-chrome-extension">Github</a></li>
     </ul>
 </div>
 </body>

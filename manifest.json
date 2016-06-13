@@ -15,7 +15,8 @@
   },
   "permissions": [
     "https://*.oneapm.com/",
-    "https://*.cloudinsight.io/"
+    "https://*.cloudinsight.io/",
+    "alarms"
   ],
   "browser_action": {
     "default_title": "Cloudinsight Mini",
