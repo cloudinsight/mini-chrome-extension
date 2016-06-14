@@ -88,14 +88,23 @@ function loadChart(token) {
   })
 }
 
+/**
+ * 刷新 Badge
+ */
+function updateBadge() {
+  chrome.storage.sync.get('token', function (item) {
+    var savedToken = item.token;
+    loadChart(savedToken);
+  });
+}
+
 // 显示三个点，表示正在加载
 showBadge('...');
-
-loadChart(localStorage["token"]);
+updateBadge();
 
 chrome.runtime.onMessage.addListener(function (evt) {
   if (evt === 'fetch') {
-    loadChart(localStorage["token"]);
+    updateBadge();
   }
 });
 
@@ -107,6 +116,6 @@ chrome.alarms.create('fetch_timer', {
 // 处理刷新的 alarm
 chrome.alarms.onAlarm.addListener(function (alarm) {
   if (alarm.name === 'fetch_timer') {
-    loadChart(localStorage["token"]);
+    updateBadge();
   }
 });
