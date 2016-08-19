@@ -1,3 +1,8 @@
+Raven.config('https://cb8930fd4c7e4e879b8d6513dbfd6ea1@sentry.cloudinsight.cc/4', {
+  release: chrome.app.getDetails().version,
+  environment: chrome.app.getIsInstalled() ? 'Production' : 'Development'
+}).install();
+
 // 默认 badge 颜色
 var defaultColor = "#0000FF";
 // 出错 badge 颜色
@@ -32,6 +37,9 @@ function showError(text) {
  * @returns {string}
  */
 var readable = function (val) {
+  if (val === null) {
+    return 'N/A'
+  }
   if (Math.abs(val) < 10) {
     return "" + val.toFixed(2);
   } else if (Math.abs(val) < 100) {
@@ -48,7 +56,7 @@ var readable = function (val) {
  */
 function loadChart(token) {
 
-  $.getJSON('https://cloud.oneapm.com/share/chart.json', {
+  $.getJSON('https://cloud.oneapm.com/v1/share/chart.json', {
     token: token
   }).then(function (res) {
     var result = res.result;
@@ -64,7 +72,7 @@ function loadChart(token) {
         return t.indexOf('=') !== -1;
       });
 
-      return $.getJSON('https://cloud.oneapm.com/query.json', {
+      return $.getJSON('https://cloud.oneapm.com/v1/query.json', {
         token: token,
         q: aggregator + ':' + metric + '{' + tags.join(",") + '}',
         begin: duration * 1000,
@@ -82,8 +90,8 @@ function loadChart(token) {
         showBadge(readable(pointlist[timeStamps[timeStamps.length - 1]]));
       }
     }
-  }).catch(function () {
-    console.error(arguments)
+  }).catch(function (e) {
+    Raven.captureException(e);
     showError("!");
   })
 }
