@@ -11,6 +11,8 @@ var errorColor = "#FF0000";
 var periodInMinutes = 10;
 // 最近 1 小时
 var duration = 3600;
+// warningFlag
+var invalidTokenMessageSent = false;
 
 /**
  * 显示 badge
@@ -52,9 +54,27 @@ var readable = function (val) {
 }
 
 /**
+ * 验证 token 有效性
+ * @param string
+ * @returns {*|boolean}
+ */
+function isValidToken(string) {
+  return string && /^[\w]{32}$/.test(string);
+}
+
+/**
  * 加载指定的 token
  */
 function loadChart(token) {
+  if (!isValidToken(token)) {
+    if (!invalidTokenMessageSent) {
+      Raven.captureMessage('Token not set by user.', {
+        level: 'warning'
+      });
+      invalidTokenMessageSent = true;
+    }
+    return true;
+  }
 
   $.getJSON('https://cloud.oneapm.com/v1/share/chart.json', {
     token: token
@@ -91,7 +111,17 @@ function loadChart(token) {
       }
     }
   }).catch(function (e) {
-    Raven.captureException(e);
+    if (e.status) {
+      // e 是 XHR 的情况
+      Raven.captureException(e.statusText, {
+        extra: {
+          responseText: e.responseText,
+          status: e.status
+        }
+      });
+    } else {
+      Raven.captureException(e);
+    }
     showError("!");
   })
 }
