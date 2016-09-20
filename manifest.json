@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Cloudinsight Mini",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "View your dashboard chart from Cloudinsight.",
   "icons": {
     "128": "icon_128.png"
