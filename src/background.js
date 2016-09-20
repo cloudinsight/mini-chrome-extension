@@ -16,11 +16,13 @@ Raven.config('https://cb8930fd4c7e4e879b8d6513dbfd6ea1@sentry.cloudinsight.cc/4'
 ga();
 
 chrome.runtime.onStartup.addListener(ga.bind(null, {
+  t: 'event',
   ec: 'runtime',
   ea: 'startup'
 }));
 
 chrome.runtime.onInstalled.addListener(details => ga.bind(null, {
+  t: 'event',
   ec: 'runtime',
   ea: details.reason
 }));
@@ -38,14 +40,15 @@ let invalidTokenMessageSent = false;
  */
 function loadChart(token) {
   if (!isValidToken(token)) {
-    if (!invalidTokenMessageSent) {
-      Raven.captureMessage('Token not set by user.', {
-        level: 'warning'
-      });
-      invalidTokenMessageSent = true;
-    }
     return true;
   }
+
+  ga({
+    t: 'ajax',
+    ec: 'load',
+    ea: 'chart',
+    el: token
+  });
 
   $.getJSON('https://cloud.oneapm.com/v1/share/chart.json', {
     token: token

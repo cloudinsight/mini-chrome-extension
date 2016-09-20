@@ -2,7 +2,7 @@ import $ from 'jquery';
 import uuid from 'uuid';
 
 const details = chrome.app.getDetails();
-const tid = 'UA-58200086-5';
+const tid = 'UA-79575996-6';
 const url = 'http://www.google-analytics.com/collect';
 
 /**

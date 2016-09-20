@@ -1,4 +1,7 @@
 import $ from 'jquery';
+import { ga } from './lib';
+
+ga();
 
 $(() => {
 

@@ -1,5 +1,10 @@
 import $ from 'jquery';
-import isValidToken from './lib/isValidToken';
+import {
+  isValidToken,
+  ga
+} from './lib';
+
+ga();
 
 const INVALID_TOKEN_MESSAGE = "无效的 token";
 chrome.storage.sync.get('token', ({ token }) => {
