@@ -4,7 +4,8 @@ import {
   isValidToken,
   readable,
   showBadge,
-  showError
+  showError,
+  ga
 } from './lib';
 
 Raven.config('https://cb8930fd4c7e4e879b8d6513dbfd6ea1@sentry.cloudinsight.cc/4', {
@@ -12,6 +13,17 @@ Raven.config('https://cb8930fd4c7e4e879b8d6513dbfd6ea1@sentry.cloudinsight.cc/4'
   environment: chrome.app.getIsInstalled() ? 'Production' : 'Development'
 }).install();
 
+ga();
+
+chrome.runtime.onStartup.addListener(ga.bind(null, {
+  ec: 'runtime',
+  ea: 'startup'
+}));
+
+chrome.runtime.onInstalled.addListener(details => ga.bind(null, {
+  ec: 'runtime',
+  ea: details.reason
+}));
 
 // 每 10 分钟更新一次
 const periodInMinutes = 10;

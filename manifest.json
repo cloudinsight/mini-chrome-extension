@@ -16,7 +16,6 @@
     "https://*.oneapm.com/",
     "https://*.cloudinsight.io/",
     "http://www.google-analytics.com/",
-    "http://www.googletagmanager.com/",
     "alarms",
     "storage"
   ],
