@@ -25,3 +25,8 @@
 
 - 发送请求前验证 Token 有效性
 - 跟详细的 AJAX 错误上下文
+
+## v0.5.1
+
+- 使用 Webpack 打包代码
+- 增加 Google Analytics 统计
