@@ -1,66 +1,25 @@
+const Raven = require('raven-js');
+const $ = require('jquery');
+import {
+  isValidToken,
+  readable,
+  showBadge,
+  showError
+} from './lib';
+
 Raven.config('https://cb8930fd4c7e4e879b8d6513dbfd6ea1@sentry.cloudinsight.cc/4', {
   release: chrome.app.getDetails().version,
   environment: chrome.app.getIsInstalled() ? 'Production' : 'Development'
 }).install();
 
-// 默认 badge 颜色
-var defaultColor = "#0000FF";
-// 出错 badge 颜色
-var errorColor = "#FF0000";
+
 // 每 10 分钟更新一次
-var periodInMinutes = 10;
+const periodInMinutes = 10;
 // 最近 1 小时
-var duration = 3600;
+const duration = 3600;
+
 // warningFlag
-var invalidTokenMessageSent = false;
-
-/**
- * 显示 badge
- * @param text {string}
- */
-function showBadge(text) {
-  chrome.browserAction.setBadgeText({ text: text });
-  chrome.browserAction.setBadgeBackgroundColor({ color: defaultColor });
-}
-
-/**
- * 显示错误
- * @param text {string}
- */
-function showError(text) {
-  chrome.browserAction.setBadgeText({ text: text });
-  chrome.browserAction.setBadgeBackgroundColor({ color: errorColor });
-}
-
-/**
- * badge 最大长度是 4 个字符
- *
- * @param val {Number}
- * @returns {string}
- */
-var readable = function (val) {
-  if (val === null) {
-    return 'N/A'
-  }
-  if (Math.abs(val) < 10) {
-    return "" + val.toFixed(2);
-  } else if (Math.abs(val) < 100) {
-    return "" + val.toFixed(1);
-  } else if (Math.abs(val) < 10000) {
-    return "" + Math.round(val);
-  } else {
-    return "" + val.toExponential(0);
-  }
-}
-
-/**
- * 验证 token 有效性
- * @param string
- * @returns {*|boolean}
- */
-function isValidToken(string) {
-  return string && /^[\w]{32}$/.test(string);
-}
+let invalidTokenMessageSent = false;
 
 /**
  * 加载指定的 token
@@ -79,13 +38,13 @@ function loadChart(token) {
   $.getJSON('https://cloud.oneapm.com/v1/share/chart.json', {
     token: token
   }).then(function (res) {
-    var result = res.result;
+    const result = res.result;
     if (result && result.metrics.length) {
-      var m = result.metrics[0];
+      const m = result.metrics[0];
 
-      var aggregator = m.aggregator || 'avg';
-      var tags = m.tags || [];
-      var metric = m.metric;
+      const aggregator = m.aggregator || 'avg';
+      let tags = m.tags || [];
+      const metric = m.metric;
 
 
       tags = tags.filter(function (t) {
@@ -103,8 +62,8 @@ function loadChart(token) {
     }
   }).then(function (data) {
     if (data.result && data.result[0]) {
-      var pointlist = data.result[0].pointlist;
-      var timeStamps = Object.keys(pointlist);
+      const pointlist = data.result[0].pointlist;
+      const timeStamps = Object.keys(pointlist);
       // 取最后一个值
       if (timeStamps.length) {
         showBadge(readable(pointlist[timeStamps[timeStamps.length - 1]]));
