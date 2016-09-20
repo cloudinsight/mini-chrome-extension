@@ -15,13 +15,13 @@ Raven.config('https://cb8930fd4c7e4e879b8d6513dbfd6ea1@sentry.cloudinsight.cc/4'
 
 ga();
 
-chrome.runtime.onStartup.addListener(ga.bind(null, {
+chrome.runtime.onStartup.addListener(() => ga({
   t: 'event',
   ec: 'runtime',
   ea: 'startup'
 }));
 
-chrome.runtime.onInstalled.addListener(details => ga.bind(null, {
+chrome.runtime.onInstalled.addListener(details => ga({
   t: 'event',
   ec: 'runtime',
   ea: details.reason
@@ -44,9 +44,9 @@ function loadChart(token) {
   }
 
   ga({
-    t: 'ajax',
-    ec: 'load',
-    ea: 'chart',
+    t: 'event',
+    ec: 'ajax',
+    ea: 'loadChart',
     el: token
   });
 
