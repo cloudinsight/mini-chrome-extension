@@ -70,7 +70,8 @@ function loadChart(token) {
         token: token,
         q: aggregator + ':' + metric + '{' + tags.join(",") + '}',
         begin: duration * 1000,
-        interval: duration + 1
+        interval: duration + 1,
+        end: Math.round(Date.now() / 10000) * 10000
       });
     } else {
       throw new Error('Invalid result');
